@@ -19,13 +19,13 @@
     "x-hubspot-introduction" : "Use the video conference API to add video conferencing options when scheduling a meeting in HubSpot."
   },
   "servers" : [ {
-    "url" : "https://api.hubapi.com"
+    "url" : "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings"
   } ],
   "tags" : [ {
     "name" : "Settings"
   } ],
   "paths" : {
-    "/crm/v3/extensions/videoconferencing/settings/{appId}" : {
+    "/{appId}" : {
       "get" : {
         "tags" : [ "Settings" ],
         "summary" : "Get settings",
@@ -208,7 +208,8 @@
             "example" : "https://example.com/user-verify"
           },
           "fetchAccountsUri" : {
-            "type" : "string"
+            "type" : "string",
+            "example": "https://example.xyz/1"
           },
           "createMeetingUrl" : {
             "type" : "string",
