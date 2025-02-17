@@ -29,7 +29,7 @@ These changes are done in order to improve the overall usability, and as workaro
 
    - **Reason**: This simplifies the API paths making them shorter and easier to read.
 
-3. Add example for fetchAccountsUri object in External settings for `put` method
+3. Add example for `fetchAccountsUri` object in External settings for `put` method
 
    - **Original**: No example was present.
 
