@@ -54,6 +54,35 @@ These changes are done in order to improve the overall usability, and as workaro
 
    - **Reason**: This indicates the proper format of the URI to avoid validation errors.
 
+4. Add nullable property for necessary objects in `ExternalSettings` component
+
+   - **Original**: No nullable property was present.
+
+   ```json
+   {
+      "updateMeetingUrl" : {
+         "type" : "string",
+         "description" : "The URL that HubSpot will send updates to existing meetings. Typically called when the user changes the topic or times of a meeting.",
+         "example" : "https://example.com/update-meeting"
+      }
+   }
+   ```
+
+   - **Updated**: Nullable property was added for `updateMeetingUrl`, `deleteMeetingUrl`, `fetchAccountsUri`, `userVerifyUrl`.
+
+   ```json
+   {
+      "updateMeetingUrl" : {
+         "type" : "string",
+         "description" : "The URL that HubSpot will send updates to existing meetings. Typically called when the user changes the topic or times of a meeting.",
+         "example" : "https://example.com/update-meeting",
+         "nullable": true
+      },
+   }
+   ```
+
+   - **Reason**: This nullable property ensures the correct generation of client resource functions to handle null values in json response fields.
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.

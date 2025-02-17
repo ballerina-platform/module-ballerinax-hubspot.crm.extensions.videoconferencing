@@ -205,11 +205,13 @@
           "userVerifyUrl" : {
             "type" : "string",
             "description" : "The URL that HubSpot will use to verify that a user exists in the video conference application.",
-            "example" : "https://example.com/user-verify"
+            "example" : "https://example.com/user-verify",
+            "nullable": true
           },
           "fetchAccountsUri" : {
             "type" : "string",
-            "example": "https://example.xyz/1"
+            "example": "https://example.xyz/1",
+            "nullable": true
           },
           "createMeetingUrl" : {
             "type" : "string",
@@ -219,12 +221,14 @@
           "updateMeetingUrl" : {
             "type" : "string",
             "description" : "The URL that HubSpot will send updates to existing meetings. Typically called when the user changes the topic or times of a meeting.",
-            "example" : "https://example.com/update-meeting"
+            "example" : "https://example.com/update-meeting",
+            "nullable": true
           },
           "deleteMeetingUrl" : {
             "type" : "string",
             "description" : "The URL that HubSpot will send notifications of meetings that have been deleted in HubSpot.",
-            "example" : "https://example.com/delete-meeting"
+            "example" : "https://example.com/delete-meeting",
+            "nullable": true
           }
         },
         "description" : "The URLs of the various actions provided by the video conferencing application. All URLs must use the `https` protocol.",
