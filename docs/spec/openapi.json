@@ -321,7 +321,8 @@
       "developer_hapikey" : {
         "type" : "apiKey",
         "name" : "hapikey",
-        "in" : "query"
+        "in" : "query",
+        "description" : "HubSpot developer API key"
       }
     }
   },

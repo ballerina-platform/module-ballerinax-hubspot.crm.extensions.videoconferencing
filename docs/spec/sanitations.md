@@ -83,6 +83,35 @@ These changes are done in order to improve the overall usability, and as workaro
 
    - **Reason**: This nullable property ensures the correct generation of client resource functions to handle null values in json response fields.
 
+5. Add field description for `hapikey` property
+
+   - **Original**: No field descrition was present.
+
+   ```json
+   {
+      "developer_hapikey" : {
+         "type" : "apiKey",
+         "name" : "hapikey",
+         "in" : "query"
+      }
+   }
+   ```
+
+   - **Updated**: Description was added.
+
+   ```json
+   {
+      "developer_hapikey" : {
+         "type" : "apiKey",
+         "name" : "hapikey",
+         "in" : "query",
+         "description" : "HubSpot developer API key"
+      }
+   }
+   ```
+
+   - **Reason**: This helps to find the correct key from HubSpot easily.
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
