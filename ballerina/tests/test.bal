@@ -1,5 +1,7 @@
 import ballerina/http;
 import ballerina/test;
+import ballerina/io;
+import ballerina/lang.runtime;
 
 configurable string hapikey = ?;
 configurable int appId = ?;
@@ -37,14 +39,17 @@ function testDeleteSettings() returns error? {
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
+    if isLiveServer {
+        // Wait for the server to be updated the settings
+        runtime:sleep(60);
+    }
     ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferrencing->/[appIdSigned32]();
-    // TODO: Is there a better way to check for a 404 error rather than checking for all 4xx errors?
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
 @test:Config {
     enable: true,
-    dependsOn: [testDeleteSettings]
+    dependsOn: [testGetEmptySettings]
 }
 function testPutSettings() returns error? {
     ExternalSettings payload = {
@@ -58,12 +63,67 @@ function testPutSettings() returns error? {
     enable: true,
     dependsOn: [testPutSettings]
 }
+function testPutIncorrectAppId() returns error? {
+    ExternalSettings payload = {
+        createMeetingUrl: "https://example.com/create-meeting"
+    };
+    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferrencing->/[1234].put(payload);
+    test:assertTrue(settings is http:ClientRequestError, "Error putting settings with incorrect appId");
+}
+
+@test:Config {
+    enable: true,
+    dependsOn: [testPutSettings]
+}
 function testGetSettings() returns error? {
+    if isLiveServer {
+        // Wait for the server to be updated the settings
+        runtime:sleep(60);
+    }
     ExternalSettings|http:Response settings = check hubSpotVideoConferrencing->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
     if (settings is ExternalSettings) {
         test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error getting settings");
     }
+}
+
+@test:Config {
+    enable: true,
+    dependsOn: [testPutSettings]
+}
+function testGetIncorrectAppId() returns error? {
+    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferrencing->/[1234]();
+    test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
+}
+
+@test:Config {
+    enable: true,
+    dependsOn: [testGetSettings]
+}
+function testDeleteIncorrectAppId() returns error? {
+    http:Response response = check hubSpotVideoConferrencing->/[1234].delete();
+    io:println(typeof(response));
+    test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
+}
+
+@test:Config {
+    enable: true,
+    dependsOn: [testPutSettings]
+}
+function testPutCompeteSettings() returns error? {
+    ExternalSettings payload = {
+        createMeetingUrl: "https://example.com/create-meeting",
+        updateMeetingUrl: "https://example.com/update-meeting",
+        deleteMeetingUrl: "https://example.com/delete-meeting",
+        userVerifyUrl: "https://example.com/verify-user",
+        fetchAccountsUri: "https://example.com/fetch-accounts"
+    };
+    ExternalSettings settings = check hubSpotVideoConferrencing->/[appIdSigned32].put(payload);
+    test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error putting complete settings");
+    test:assertEquals(settings?.updateMeetingUrl, "https://example.com/update-meeting", "Error putting complete settings");
+    test:assertEquals(settings?.deleteMeetingUrl, "https://example.com/delete-meeting", "Error putting complete settings");
+    test:assertEquals(settings?.userVerifyUrl, "https://example.com/verify-user", "Error putting complete settings");
+    test:assertEquals(settings?.fetchAccountsUri, "https://example.com/fetch-accounts", "Error putting complete settings");
 }
 
 @test:Config {
