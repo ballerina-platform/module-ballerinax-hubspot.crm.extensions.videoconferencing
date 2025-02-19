@@ -8,7 +8,9 @@
 
 ## Overview
 
-[//]: # (TODO: Add overview mentioning the purpose of the module, supported REST API versions, and other high-level details.)
+[HubSpot](https://developers.hubspot.com) is an AI-powered customer relationship management (CRM) platform.
+
+The `hubspot.crm.extensions.videoconferencing` offers APIs to connect and interact with the [HubSpot Video Conferencing Extension's API](https://developers.hubspot.com/docs/reference/api/crm/extensions/video-conferencing) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api).
 
 ## Setup guide
 
