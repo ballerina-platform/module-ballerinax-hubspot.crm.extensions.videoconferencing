@@ -24,7 +24,7 @@ ExternalSettings meetingSettings = {
 };
 
 service on new http:Listener(9090) {
-    resource function get [int:Signed32 appId]() returns ExternalSettings|http:ClientRequestError {
+    resource function get [int:Signed32 appId]() returns ExternalSettings|error {
         if appId == appIdSigned32 && meetingSettings.createMeetingUrl != "" {
             return meetingSettings;
         } else {
@@ -32,12 +32,21 @@ service on new http:Listener(9090) {
         }
     }
 
-    resource function put [int:Signed32 appId](@http:Payload ExternalSettings payload) returns ExternalSettings {
+    resource function put [int:Signed32 appId](@http:Payload ExternalSettings payload) returns ExternalSettings|error {
+        if appId != appIdSigned32 {
+            return <http:ClientRequestError> error("Invalid appId", body = "", headers = {}, statusCode = 400);
+        }
         meetingSettings = payload;
         return meetingSettings;
     }
 
-    resource function delete [int:Signed32 appId]() returns http:Response {
+    resource function delete [int:Signed32 appId]() returns http:Response|error {
+        if appId != appIdSigned32 {
+            http:Response response = new();
+            response.statusCode = 404;
+            response.server = "ballerina";
+            return response;
+        }
         meetingSettings = {
             createMeetingUrl: ""
         };
