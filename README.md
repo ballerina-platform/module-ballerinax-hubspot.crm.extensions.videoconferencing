@@ -14,11 +14,136 @@ The `hubspot.crm.extensions.videoconferencing` offers APIs to connect and intera
 
 ## Setup guide
 
-[//]: # (TODO: Add detailed steps to obtain credentials and configure the module.)
+If you have an account already, go to the [HubSpot developer portal](https://app.hubspot.com/)
+
+If you don't have a HubSpot Developer Account you can sign up to a free account [here](https://developers.hubspot.com/get-started)
+
+### Step 1: Create/Login to a HubSpot Developer Account
+
+If you have an account already, go to the [HubSpot developer portal](https://app.hubspot.com/)
+
+If you don't have a HubSpot Developer Account you can sign up to a free account [here](https://developers.hubspot.com/get-started)
+
+### Step 2 (Optional): Create a Developer Test Account under your account
+
+Within app developer accounts, you can create [developer test accounts](https://developers.hubspot.com/docs/getting-started/account-types#developer-test-accounts) to test apps and integrations without affecting any real HubSpot data.
+
+**Note: These accounts are only for development and testing purposes. In production you should not use Developer Test Accounts.**
+
+1. Go to Test Account section from the left sidebar.
+   ![Hubspot developer portal](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-2-1.png)
+
+2. Click Create developer test account.
+   ![Hubspot developer testacc](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-2-2.png)
+
+3. In the dialogue box, give a name to your test account and click create.
+   ![Hubspot developer testacc3](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-2-3.png)
+
+### Step 3: Create a HubSpot App under your account
+
+1. In your developer account, navigate to the "Apps" section. Click on "Create App"
+   ![Hubspot app creation 1](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-3-1.png)
+
+2. Provide the required app name and optionally a description.
+   ![Hubspot app creation 1](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-3-2.png)
+
+### Step 4: Set Redirect URL
+
+1. Move to the "Auth" Tab.
+   ![Hubspot app creation 2](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-4-1.png)
+
+2. Add your "Redirect URI" in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
+   ![Hubspot create app final](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-4-2.png)
+
+### Step 5: Get your App ID
+
+1. Navigate to the "Apps" section, again.
+  ![Hubspot Apps](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-5-1.png)
+
+2. Obtain the App ID.
+  ![Hubspot DemoApp App ID](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-5-2.png)
+
+### Step 6: Get your Developer API key
+
+1. Click on "Keys" section on the left sidebar and then on "Developer API Key".
+  ![Hubspot Apps](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-1.png)
+
+2. Click on "Create Key".
+  ![Hubspot API Key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-2.png)
+
+3. Click on "Show".
+  ![Hubspot Show API Key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-3.png)
+
+4. Click on "Copy" to obtain the developer API key.
+  ![Hubspot Copy API Key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-4.png)
+
+**Store the App ID (obtained in Step 4) and Developer API Key (Obtained in Step 5) securely for use in your application.**
 
 ## Quickstart
 
-[//]: # (TODO: Add a quickstart guide to demonstrate a basic functionality of the module, including sample code snippets.)
+To use the `HubSpot Video Conferencing connector` in your Ballerina application, update the `.bal` file as follows:
+
+### Step 1: Import the module
+
+Import the `hubspot.videoconferencing` module.
+
+```ballerina
+import ballerinax/hubspot.videoconferencing as hsvideoconferencing;
+```
+
+### Step 2: Instantiate a new connector
+
+1. Add these configurables in your `.bal` file.
+
+   ```ballerina
+   configurable string hapikey = ?;
+   configurable int appId = ?;
+   ```
+
+2. Instantiate a `hsvideoconferencing:ApiKeysConfig` with the defined `hapikey` and initialize the connector with it.
+
+   ```ballerina
+         final ApiKeysConfig apiKeysConfig = {
+         hapikey: hapikey
+      };
+
+    final hsvideoconferencing:Client hsvideoconferencing = check new (apiKeysConfig);
+    ```
+
+# TODO: From here
+
+
+2. Create a `Config.toml` file and, configure the obtained credentials in the above steps as follows:
+
+   ```toml
+    clientId = <Client Id>
+    clientSecret = <Client Secret>
+    refreshToken = <Refresh Token>
+   ```
+
+### Step 3: Invoke the connector operation
+
+Now, utilize the available connector operations. A sample use case is shown below.
+
+#### Create a Property Group
+
+```ballerina
+public function main() returns error? {
+    hsproperties:PropertyGroupCreate propertyGroupInput = {
+        "name": "examplePropertyGroup",
+        "displayOrder": -1,
+        "label": "This is an example Property Group"
+    };
+
+    hsproperties:PropertyGroup response = check hubSpotProperties->/[testObjectType]/groups.post(payload = propertyGroupInput);
+}
+```
+
+#### Run the Ballerina application
+
+```bash
+bal run
+```
 
 ## Examples
 
