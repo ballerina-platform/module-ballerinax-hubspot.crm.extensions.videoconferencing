@@ -1,6 +1,5 @@
 import ballerina/http;
 import ballerina/test;
-import ballerina/io;
 import ballerina/lang.runtime;
 
 configurable string hapikey = ?;
@@ -102,7 +101,6 @@ function testGetIncorrectAppId() returns error? {
 }
 function testDeleteIncorrectAppId() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[1234].delete();
-    io:println(typeof(response));
     test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
 }
 
