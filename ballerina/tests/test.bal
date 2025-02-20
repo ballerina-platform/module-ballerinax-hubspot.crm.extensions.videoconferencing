@@ -41,16 +41,13 @@ isolated function initClient() returns Client|error {
     }, {}, serviceUrl);
 }
 
-@test:Config {
-    enable: true
-}
+@test:Config {}
 function testDeleteSettings() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
     test:assertTrue(response.statusCode == 204, "Error deleting settings");
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
@@ -63,7 +60,6 @@ function testGetEmptySettings() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testGetEmptySettings]
 }
 function testPutSettings() returns error? {
@@ -75,7 +71,6 @@ function testPutSettings() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testPutSettings]
 }
 function testPutIncorrectAppId() returns error? {
@@ -87,7 +82,6 @@ function testPutIncorrectAppId() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testPutSettings]
 }
 function testGetSettings() returns error? {
@@ -103,7 +97,6 @@ function testGetSettings() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testPutSettings]
 }
 function testGetIncorrectAppId() returns error? {
@@ -112,7 +105,6 @@ function testGetIncorrectAppId() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testGetSettings]
 }
 function testDeleteIncorrectAppId() returns error? {
@@ -121,7 +113,6 @@ function testDeleteIncorrectAppId() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testPutSettings]
 }
 function testPutCompeteSettings() returns error? {
@@ -141,7 +132,6 @@ function testPutCompeteSettings() returns error? {
 }
 
 @test:Config {
-    enable: true,
     dependsOn: [testGetSettings]
 }
 function testDeleteSettingsAgain() returns error? {
