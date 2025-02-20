@@ -93,49 +93,49 @@ import ballerinax/hubspot.videoconferencing as hsvideoconferencing;
 
 ### Step 2: Instantiate a new connector
 
-1. Add these configurables in your `.bal` file.
+1. Add these configurable and final variables in your `.bal` file.
 
    ```ballerina
    configurable string hapikey = ?;
    configurable int appId = ?;
+
+   final int:Signed32 appIdSigned32 = <int:Signed32>appId;
    ```
 
 2. Instantiate a `hsvideoconferencing:ApiKeysConfig` with the defined `hapikey` and initialize the connector with it.
 
    ```ballerina
-         final ApiKeysConfig apiKeysConfig = {
-         hapikey: hapikey
-      };
+   final ApiKeysConfig apiKeysConfig = {
+      hapikey: hapikey
+   };
 
-    final hsvideoconferencing:Client hsvideoconferencing = check new (apiKeysConfig);
-    ```
+   final hsvideoconferencing:Client hsVideoConferencing = check new (apiKeysConfig);
+   ```
 
-# TODO: From here
-
-
-2. Create a `Config.toml` file and, configure the obtained credentials in the above steps as follows:
+3. Create a `Config.toml` file and, configure the obtained credentials in the above steps as follows:
 
    ```toml
-    clientId = <Client Id>
-    clientSecret = <Client Secret>
-    refreshToken = <Refresh Token>
+    hapikey = <Hubspot developer API key as a string>
+    appId = <App ID as an int>
    ```
 
 ### Step 3: Invoke the connector operation
 
 Now, utilize the available connector operations. A sample use case is shown below.
 
-#### Create a Property Group
+#### Create or update meeting settings
 
 ```ballerina
 public function main() returns error? {
-    hsproperties:PropertyGroupCreate propertyGroupInput = {
-        "name": "examplePropertyGroup",
-        "displayOrder": -1,
-        "label": "This is an example Property Group"
-    };
+   hsvideoconferencing:ExternalSettings settings = {
+      createMeetingUrl: "https://example.com/create-meeting",
+      updateMeetingUrl: "https://example.com/update-meeting",
+      deleteMeetingUrl: "https://example.com/delete-meeting",
+      userVerifyUrl: "https://example.com/verify-user",
+      fetchAccountsUri: "https://example.com/fetch-accounts"
+   };
 
-    hsproperties:PropertyGroup response = check hubSpotProperties->/[testObjectType]/groups.post(payload = propertyGroupInput);
+   hsvideoconferencing:ExternalSettings response = check hsVideoConferencing->/[appIdSigned32].put(settings);
 }
 ```
 
