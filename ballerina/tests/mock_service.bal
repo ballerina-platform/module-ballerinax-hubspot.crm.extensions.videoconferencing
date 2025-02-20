@@ -25,13 +25,13 @@ service on new http:Listener(9090) {
         if appId == appIdSigned32 && meetingSettings.createMeetingUrl != "" {
             return meetingSettings;
         } else {
-            return <http:ClientRequestError> error("Invalid appId or empty meeting settings", body = "", headers = {}, statusCode = 404);
+            return <http:ClientRequestError>error("Invalid appId or empty meeting settings", body = "", headers = {}, statusCode = 404);
         }
     }
 
     resource function put [int:Signed32 appId](@http:Payload ExternalSettings payload) returns ExternalSettings|error {
         if appId != appIdSigned32 {
-            return <http:ClientRequestError> error("Invalid appId", body = "", headers = {}, statusCode = 400);
+            return <http:ClientRequestError>error("Invalid appId", body = "", headers = {}, statusCode = 400);
         }
         meetingSettings = payload;
         return meetingSettings;
@@ -39,7 +39,7 @@ service on new http:Listener(9090) {
 
     resource function delete [int:Signed32 appId]() returns http:Response|error {
         if appId != appIdSigned32 {
-            http:Response response = new();
+            http:Response response = new ();
             response.statusCode = 404;
             response.server = "ballerina";
             return response;
@@ -47,7 +47,7 @@ service on new http:Listener(9090) {
         meetingSettings = {
             createMeetingUrl: ""
         };
-        http:Response response = new();
+        http:Response response = new ();
         response.statusCode = 204;
         response.server = "ballerina";
         return response;

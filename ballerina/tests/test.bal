@@ -15,8 +15,8 @@
 // under the License.
 
 import ballerina/http;
-import ballerina/test;
 import ballerina/lang.runtime;
+import ballerina/test;
 
 configurable string hapikey = ?;
 configurable int appId = ?;
@@ -25,7 +25,7 @@ configurable string liveServerUrl = "https://api.hubapi.com/crm/v3/extensions/vi
 configurable string localServerUrl = "http://localhost:9090";
 configurable boolean isLiveServer = true;
 
-final int:Signed32 appIdSigned32 = <int:Signed32> appId;
+final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final string serviceUrl = isLiveServer ? liveServerUrl : localServerUrl;
 final Client hubSpotVideoConferencing = check initClient();
 
@@ -43,7 +43,7 @@ isolated function initClient() returns Client|error {
 
 @test:Config {
     enable: true
-} 
+}
 function testDeleteSettings() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
     test:assertTrue(response.statusCode == 204, "Error deleting settings");
@@ -148,6 +148,4 @@ function testDeleteSettingsAgain() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
     test:assertTrue(response.statusCode == 204, "Error deleting settings");
 }
-
-
 
