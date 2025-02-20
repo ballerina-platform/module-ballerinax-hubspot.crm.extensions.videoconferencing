@@ -82,7 +82,7 @@ function testGetSettings() returns error? {
     }
     ExternalSettings|http:Response settings = check hubSpotVideoConferrencing->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
-    if (settings is ExternalSettings) {
+    if settings is ExternalSettings {
         test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error getting settings");
     }
 }
