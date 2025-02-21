@@ -34,10 +34,10 @@ Within app developer accounts, you can create [developer test accounts](https://
    ![Hubspot developer portal](./docs/resources/step-2-1.png)
 
 2. Click Create developer test account.
-   ![Hubspot developer testacc](./docs/resources/step-2-2.png)
+   ![Hubspot developer testacc1](./docs/resources/step-2-2.png)
 
 3. In the dialogue box, give a name to your test account and click create.
-   ![Hubspot developer testacc3](./docs/resources/step-2-3.png)
+   ![Hubspot developer testacc2](./docs/resources/step-2-3.png)
 
 ### Step 3: Create a HubSpot App under your account
 
@@ -45,15 +45,15 @@ Within app developer accounts, you can create [developer test accounts](https://
    ![Hubspot app creation 1](./docs/resources/step-3-1.png)
 
 2. Provide the required app name and optionally a description.
-   ![Hubspot app creation 1](./docs/resources/step-3-2.png)
+   ![Hubspot app creation 2](./docs/resources/step-3-2.png)
 
 ### Step 4: Set Redirect URL
 
 1. Move to the "Auth" Tab.
-   ![Hubspot app creation 2](./docs/resources/step-4-1.png)
+   ![Hubspot app creation auth](./docs/resources/step-4-1.png)
 
 2. Add your "Redirect URI" in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
-   ![Hubspot create app final](./docs/resources/step-4-2.png)
+   ![Hubspot create app redirect](./docs/resources/step-4-2.png)
 
 ### Step 5: Get your App ID
 
