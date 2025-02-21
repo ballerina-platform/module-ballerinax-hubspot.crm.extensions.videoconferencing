@@ -15,7 +15,6 @@
 // under the License.
 
 import ballerina/http;
-import ballerina/lang.runtime;
 import ballerina/test;
 
 configurable string hapikey = ?;
@@ -41,24 +40,23 @@ isolated function initClient() returns Client|error {
     }, {}, serviceUrl);
 }
 
+// Test: Delete existing settings if any (Positive)
 @test:Config {}
 function testDeleteSettings() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
     test:assertTrue(response.statusCode == 204, "Error deleting settings");
 }
 
+// Test: Get settings when no settings are available (Negative)
 @test:Config {
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
-    if isLiveServer {
-        // Wait for the server to be updated the settings
-        runtime:sleep(60);
-    }
     ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[appIdSigned32]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
+// Test: Put partial settings (Positive)
 @test:Config {
     dependsOn: [testGetEmptySettings]
 }
@@ -70,6 +68,7 @@ function testPutSettings() returns error? {
     test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error putting settings");
 }
 
+// Test: Put settings with incorrect appId (Negative)
 @test:Config {
     dependsOn: [testPutSettings]
 }
@@ -81,14 +80,11 @@ function testPutIncorrectAppId() returns error? {
     test:assertTrue(settings is http:ClientRequestError, "Error putting settings with incorrect appId");
 }
 
+// Test: Get settings (Positive)
 @test:Config {
     dependsOn: [testPutSettings]
 }
 function testGetSettings() returns error? {
-    if isLiveServer {
-        // Wait for the server to be updated the settings
-        runtime:sleep(60);
-    }
     ExternalSettings|http:Response settings = check hubSpotVideoConferencing->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
     if settings is ExternalSettings {
@@ -96,6 +92,7 @@ function testGetSettings() returns error? {
     }
 }
 
+// Test: Delete settings (Positive)
 @test:Config {
     dependsOn: [testPutSettings]
 }
@@ -104,6 +101,7 @@ function testGetIncorrectAppId() returns error? {
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
+// Test: Delete settings with incorrect appId (Negative)
 @test:Config {
     dependsOn: [testGetSettings]
 }
@@ -112,6 +110,7 @@ function testDeleteIncorrectAppId() returns error? {
     test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
 }
 
+// Test: Put complete settings (Positive)
 @test:Config {
     dependsOn: [testPutSettings]
 }
@@ -131,6 +130,7 @@ function testPutCompeteSettings() returns error? {
     test:assertEquals(settings?.fetchAccountsUri, "https://example.com/fetch-accounts", "Error putting complete settings");
 }
 
+// Test: Delete complete settings (Positive)
 @test:Config {
     dependsOn: [testGetSettings]
 }
