@@ -31,64 +31,64 @@ Within app developer accounts, you can create [developer test accounts](https://
 **Note: These accounts are only for development and testing purposes. In production you should not use Developer Test Accounts.**
 
 1. Go to Test Account section from the left sidebar.
-   ![Hubspot developer portal](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-2-1.png)
+   ![Hubspot developer portal](./docs/resources/step-2-1.png)
 
 2. Click Create developer test account.
-   ![Hubspot developer testacc](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-2-2.png)
+   ![Hubspot developer testacc](./docs/resources/step-2-2.png)
 
 3. In the dialogue box, give a name to your test account and click create.
-   ![Hubspot developer testacc3](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-2-3.png)
+   ![Hubspot developer testacc3](./docs/resources/step-2-3.png)
 
 ### Step 3: Create a HubSpot App under your account
 
 1. In your developer account, navigate to the "Apps" section. Click on "Create App"
-   ![Hubspot app creation 1](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-3-1.png)
+   ![Hubspot app creation 1](./docs/resources/step-3-1.png)
 
 2. Provide the required app name and optionally a description.
-   ![Hubspot app creation 1](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-3-2.png)
+   ![Hubspot app creation 1](./docs/resources/step-3-2.png)
 
 ### Step 4: Set Redirect URL
 
 1. Move to the "Auth" Tab.
-   ![Hubspot app creation 2](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/step-4-1.png)
+   ![Hubspot app creation 2](./docs/resources/step-4-1.png)
 
 2. Add your "Redirect URI" in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
-   ![Hubspot create app final](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-4-2.png)
+   ![Hubspot create app final](./docs/resources/step-4-2.png)
 
 ### Step 5: Get your App ID
 
 1. Navigate to the "Apps" section, again.
-  ![Hubspot Apps](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-5-1.png)
+  ![Hubspot Apps](./docs/resources/step-5-1.png)
 
 2. Obtain the App ID.
-  ![Hubspot DemoApp App ID](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-5-2.png)
+  ![Hubspot DemoApp App ID](./docs/resources/step-5-2.png)
 
 ### Step 6: Get your Developer API key
 
 1. Click on "Keys" section on the left sidebar and then on "Developer API Key".
-  ![Hubspot Apps](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-1.png)
+  ![Hubspot Apps](./docs/resources/step-6-1.png)
 
 2. Click on "Create Key".
-  ![Hubspot API Key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-2.png)
+  ![Hubspot API Key](./docs/resources/step-6-2.png)
 
 3. Click on "Show".
-  ![Hubspot Show API Key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-3.png)
+  ![Hubspot Show API Key](./docs/resources/step-6-3.png)
 
 4. Click on "Copy" to obtain the developer API key.
-  ![Hubspot Copy API Key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.properties/main/docs/resources/step-6-4.png)
+  ![Hubspot Copy API Key](./docs/resources/step-6-4.png)
 
 **Store the App ID (obtained in Step 4) and Developer API Key (Obtained in Step 5) securely for use in your application.**
 
 ## Quickstart
 
-To use the `HubSpot Video Conferencing connector` in your Ballerina application, update the `.bal` file as follows:
+To use the `HubSpot CRM Video conference connector` in your Ballerina application, update the `.bal` file as follows:
 
 ### Step 1: Import the module
 
-Import the `hubspot.videoconferencing` module.
+Import the `hubspot.crm.extensions.videoconferencing` module.
 
 ```ballerina
-import ballerinax/hubspot.videoconferencing as hsvideoconferencing;
+import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencing;
 ```
 
 ### Step 2: Instantiate a new connector
@@ -105,7 +105,7 @@ import ballerinax/hubspot.videoconferencing as hsvideoconferencing;
 2. Instantiate a `hsvideoconferencing:ApiKeysConfig` with the defined `hapikey` and initialize the connector with it.
 
    ```ballerina
-   final ApiKeysConfig apiKeysConfig = {
+   final hsvideoconferencing:ApiKeysConfig apiKeysConfig = {
       hapikey: hapikey
    };
 
@@ -149,7 +149,8 @@ bal run
 
 The `HubSpot CRM Video conference` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/), covering the following use cases:
 
-[//]: # (TODO: Add examples)
+1. [Operate Conference Service](./examples/operate-conference-service/)
+2. [Close Conference Service](./examples/close-conference-service/)
 
 ## Build from the source
 
