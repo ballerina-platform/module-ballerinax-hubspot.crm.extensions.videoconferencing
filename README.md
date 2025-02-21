@@ -147,7 +147,7 @@ bal run
 
 ## Examples
 
-The `HubSpot CRM Video conference` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/), covering the following use cases:
+The `HubSpot CRM Video conference` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](./examples/), covering the following use cases:
 
 1. [Operate Conference Service](./examples/operate-conference-service/)
 2. [Close Conference Service](./examples/close-conference-service/)
