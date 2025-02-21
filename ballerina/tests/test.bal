@@ -51,10 +51,6 @@ function testDeleteSettings() returns error? {
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
-    if isLiveServer {
-        // Wait for the server to be updated the settings
-        runtime:sleep(60);
-    }
     ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[appIdSigned32]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
@@ -85,10 +81,6 @@ function testPutIncorrectAppId() returns error? {
     dependsOn: [testPutSettings]
 }
 function testGetSettings() returns error? {
-    if isLiveServer {
-        // Wait for the server to be updated the settings
-        runtime:sleep(60);
-    }
     ExternalSettings|http:Response settings = check hubSpotVideoConferencing->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
     if settings is ExternalSettings {
