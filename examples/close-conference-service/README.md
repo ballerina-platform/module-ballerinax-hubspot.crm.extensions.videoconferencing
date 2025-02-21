@@ -6,7 +6,7 @@ This example demonstrates how to use the HubSpot CRM Extensions Video Conferenci
 
 1. **Ballerina:** Download and install Ballerina from [here](https://ballerina.io/downloads/).
 
-2. **HubSpot developer account:** Create a HubSpot developer account and create an app to obtain the necessary credentials. Refer to the [Setup Guide](../ballerina/Package.md) for instructions.
+2. **HubSpot developer account:** Create a HubSpot developer account and create an app to obtain the necessary credentials. Refer to the [Setup Guide](../../ballerina/Package.md) for instructions.
 
 3. **`Config.toml`:** Add the `Config.toml` in the example's root directory and add the obtained credentials from HubSpot. Here's an example of how your `Config.toml` file should look:
 
