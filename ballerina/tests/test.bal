@@ -25,6 +25,7 @@ configurable string localServerUrl = "http://localhost:9090";
 configurable boolean isLiveServer = false;
 
 final int:Signed32 appIdSigned32 = <int:Signed32>appId;
+final int:Signed32 incorrectAppId = 1234;
 final string serviceUrl = isLiveServer ? liveServerUrl : localServerUrl;
 final Client hubSpotVideoConferencing = check initClient();
 
@@ -76,7 +77,7 @@ function testPutIncorrectAppId() returns error? {
     ExternalSettings payload = {
         createMeetingUrl: "https://example.com/create-meeting"
     };
-    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[1234].put(payload);
+    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[incorrectAppId].put(payload);
     test:assertTrue(settings is http:ClientRequestError, "Error putting settings with incorrect appId");
 }
 
@@ -97,7 +98,7 @@ function testGetSettings() returns error? {
     dependsOn: [testPutSettings]
 }
 function testGetIncorrectAppId() returns error? {
-    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[1234]();
+    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[incorrectAppId]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
@@ -106,7 +107,7 @@ function testGetIncorrectAppId() returns error? {
     dependsOn: [testGetSettings]
 }
 function testDeleteIncorrectAppId() returns error? {
-    http:Response response = check hubSpotVideoConferencing->/[1234].delete();
+    http:Response response = check hubSpotVideoConferencing->/[incorrectAppId].delete();
     test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
 }
 
