@@ -17,17 +17,17 @@
 import ballerina/http;
 import ballerina/test;
 
-configurable string hapikey = ?;
-configurable int appId = ?;
+configurable string hapikey = "my-key-123";
+configurable int appId = 12345;
 
-configurable string liveServerUrl = ?;
-configurable string localServerUrl = ?;
-configurable boolean isLiveServer = ?;
+configurable string liveServerUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings";
+configurable string localServerUrl = "http://localhost:9090";
+configurable boolean isLiveServer = true;
 
 final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final int:Signed32 incorrectAppId = 1234;
 final string serviceUrl = isLiveServer ? liveServerUrl : localServerUrl;
-final Client hubSpotVideoConferencing = check initClient();
+final Client hubspot = check initClient();
 
 isolated function initClient() returns Client|error {
     if isLiveServer {
@@ -44,7 +44,7 @@ isolated function initClient() returns Client|error {
 // Test: Delete existing settings if any (Positive)
 @test:Config {}
 function testDeleteSettings() returns error? {
-    http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
+    http:Response response = check hubspot->/[appIdSigned32].delete();
     test:assertEquals(response.statusCode, 204, "Error deleting settings");
 }
 
@@ -53,7 +53,7 @@ function testDeleteSettings() returns error? {
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
-    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[appIdSigned32]();
+    ExternalSettings|http:ClientRequestError|error settings = hubspot->/[appIdSigned32]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
@@ -65,7 +65,7 @@ function testPutSettings() returns error? {
     ExternalSettings payload = {
         createMeetingUrl: "https://example.com/create-meeting"
     };
-    ExternalSettings settings = check hubSpotVideoConferencing->/[appIdSigned32].put(payload);
+    ExternalSettings settings = check hubspot->/[appIdSigned32].put(payload);
     test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error putting settings");
 }
 
@@ -77,7 +77,7 @@ function testPutIncorrectAppId() returns error? {
     ExternalSettings payload = {
         createMeetingUrl: "https://example.com/create-meeting"
     };
-    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[incorrectAppId].put(payload);
+    ExternalSettings|http:ClientRequestError|error settings = hubspot->/[incorrectAppId].put(payload);
     test:assertTrue(settings is http:ClientRequestError, "Error putting settings with incorrect appId");
 }
 
@@ -86,7 +86,7 @@ function testPutIncorrectAppId() returns error? {
     dependsOn: [testPutSettings]
 }
 function testGetSettings() returns error? {
-    ExternalSettings|http:Response settings = check hubSpotVideoConferencing->/[appIdSigned32]();
+    ExternalSettings|http:Response settings = check hubspot->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
     if settings is ExternalSettings {
         test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error getting settings");
@@ -98,7 +98,7 @@ function testGetSettings() returns error? {
     dependsOn: [testPutSettings]
 }
 function testGetIncorrectAppId() returns error? {
-    ExternalSettings|http:ClientRequestError|error settings = hubSpotVideoConferencing->/[incorrectAppId]();
+    ExternalSettings|http:ClientRequestError|error settings = hubspot->/[incorrectAppId]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
@@ -107,7 +107,7 @@ function testGetIncorrectAppId() returns error? {
     dependsOn: [testGetSettings]
 }
 function testDeleteIncorrectAppId() returns error? {
-    http:Response response = check hubSpotVideoConferencing->/[incorrectAppId].delete();
+    http:Response response = check hubspot->/[incorrectAppId].delete();
     test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
 }
 
@@ -123,7 +123,7 @@ function testPutCompeteSettings() returns error? {
         userVerifyUrl: "https://example.com/verify-user",
         fetchAccountsUri: "https://example.com/fetch-accounts"
     };
-    ExternalSettings settings = check hubSpotVideoConferencing->/[appIdSigned32].put(payload);
+    ExternalSettings settings = check hubspot->/[appIdSigned32].put(payload);
     test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error putting complete settings");
     test:assertEquals(settings?.updateMeetingUrl, "https://example.com/update-meeting", "Error putting complete settings");
     test:assertEquals(settings?.deleteMeetingUrl, "https://example.com/delete-meeting", "Error putting complete settings");
@@ -136,7 +136,7 @@ function testPutCompeteSettings() returns error? {
     dependsOn: [testGetSettings]
 }
 function testDeleteSettingsAgain() returns error? {
-    http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
+    http:Response response = check hubspot->/[appIdSigned32].delete();
     test:assertEquals(response.statusCode, 204, "Error deleting settings");
 }
 
