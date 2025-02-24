@@ -20,9 +20,9 @@ import ballerina/test;
 configurable string hapikey = ?;
 configurable int appId = ?;
 
-configurable string liveServerUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings";
-configurable string localServerUrl = "http://localhost:9090";
-configurable boolean isLiveServer = false;
+configurable string liveServerUrl = ?;
+configurable string localServerUrl = ?;
+configurable boolean isLiveServer = ?;
 
 final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final int:Signed32 incorrectAppId = 1234;
