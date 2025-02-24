@@ -22,7 +22,7 @@ configurable int appId = ?;
 
 configurable string liveServerUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings";
 configurable string localServerUrl = "http://localhost:9090";
-configurable boolean isLiveServer = true;
+configurable boolean isLiveServer = false;
 
 final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final string serviceUrl = isLiveServer ? liveServerUrl : localServerUrl;
@@ -44,7 +44,7 @@ isolated function initClient() returns Client|error {
 @test:Config {}
 function testDeleteSettings() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
-    test:assertTrue(response.statusCode == 204, "Error deleting settings");
+    test:assertEquals(response.statusCode, 204, "Error deleting settings");
 }
 
 // Test: Get settings when no settings are available (Negative)
@@ -136,6 +136,6 @@ function testPutCompeteSettings() returns error? {
 }
 function testDeleteSettingsAgain() returns error? {
     http:Response response = check hubSpotVideoConferencing->/[appIdSigned32].delete();
-    test:assertTrue(response.statusCode == 204, "Error deleting settings");
+    test:assertEquals(response.statusCode, 204, "Error deleting settings");
 }
 
