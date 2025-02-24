@@ -16,13 +16,14 @@
 
 import ballerina/http;
 import ballerina/test;
+import ballerina/os;
 
 configurable string hapikey = "my-key-123";
 configurable int appId = 12345;
 
 configurable string liveServerUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings";
 configurable string localServerUrl = "http://localhost:9090";
-configurable boolean isLiveServer = true;
+configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
 
 final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final int:Signed32 incorrectAppId = 1234;
