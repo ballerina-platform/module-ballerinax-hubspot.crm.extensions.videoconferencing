@@ -1,12 +1,12 @@
-# [Close Conference Service](./)
+# [Close Conference Service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/)
 
-This example demonstrates how to use the HubSpot CRM Extensions Video Conferencing API to remove saved settings related to an external video conferencing service. This covers the removal of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot web site by users. This allows to shut down the external video conferencing application safely without getting into any errors on HubSpot end or HubSpot making unnecessary requests to non-existing URLs (which were previously held by the external video conferencing application).
+This example demonstrates how to use the `HubSpot CRM Video conference connector` to remove saved settings related to an external video conferencing service. This covers the removal of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot web site by users. This allows to shut down the external video conferencing application safely without getting into any errors on HubSpot end or HubSpot making unnecessary requests to non-existing URLs (which were previously held by the external video conferencing application).
 
 ## Prerequisites
 
 1. **Ballerina:** Download and install Ballerina from [here](https://ballerina.io/downloads/).
 
-2. **HubSpot developer account:** Create a HubSpot developer account and create an app to obtain the necessary credentials. Refer to the [Setup Guide](../../ballerina/Package.md) for instructions.
+2. **HubSpot developer account:** Create a HubSpot developer account and create an app to obtain the necessary credentials. Refer to the [Setup Guide](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/ballerina/README.md) for instructions.
 
 3. **`Config.toml`:** Add the `Config.toml` in the example's root directory and add the obtained credentials from HubSpot. Here's an example of how your `Config.toml` file should look:
 
@@ -18,18 +18,18 @@ This example demonstrates how to use the HubSpot CRM Extensions Video Conferenci
 4. **`hubspot.crm.extensions.videoconferencing` module:** Import the `ballerinax/hubspot.crm.extensions.videoconferencing` module into your Ballerina project and configure it with the obtained credentials.
 
     ```ballerina
-    import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencing;
+    import ballerinax/hubspot.crm.extensions.videoconferencing as hubspot;
 
     configurable string hapikey = ?;
     configurable int appId = ?;
 
     final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 
-    final hsvideoconferencing:ApiKeysConfig apiKeysConfig = {
+    final hubspot:ApiKeysConfig apiKeysConfig = {
         hapikey: hapikey
     };
 
-    final hsvideoconferencing:Client baseClient = check new (apiKeysConfig);
+    final hubspot:Client baseClient = check new (apiKeysConfig);
     ```
 
 ## Running an example
