@@ -15,23 +15,6 @@ This example demonstrates how to use the `HubSpot CRM Video conference connector
     appId = <App ID as an int>
     ```
 
-4. **`hubspot.crm.extensions.videoconferencing` module:** Import the `ballerinax/hubspot.crm.extensions.videoconferencing` module into your Ballerina project and configure it with the obtained credentials.
-
-    ```ballerina
-    import ballerinax/hubspot.crm.extensions.videoconferencing as hubspot;
-
-    configurable string hapikey = ?;
-    configurable int appId = ?;
-
-    final int:Signed32 appIdSigned32 = <int:Signed32>appId;
-
-    final hubspot:ApiKeysConfig apiKeysConfig = {
-        hapikey: hapikey
-    };
-
-    final hubspot:Client baseClient = check new (apiKeysConfig);
-    ```
-
 ## Running an example
 
 Execute the following commands to build an example from the source:
