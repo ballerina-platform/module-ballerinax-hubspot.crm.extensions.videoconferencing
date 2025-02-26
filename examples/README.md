@@ -2,8 +2,8 @@
 
 The `ballerinax/hubspot.crm.extensions.videoconferencing` connector provides practical examples illustrating usage in various scenarios.
 
-1. [Operate conference service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
-2. [Close conference service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/)
+1. [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
+2. [Remove saved settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/)
 
 ## Prerequisites
 
@@ -16,23 +16,6 @@ The `ballerinax/hubspot.crm.extensions.videoconferencing` connector provides pra
     ```toml
     hapikey = <HubSpot developer API key as a string>
     appId = <App ID as an int>
-    ```
-
-4. **`hubspot.crm.extensions.videoconferencing` module:** Import the `ballerinax/hubspot.crm.extensions.videoconferencing` module into your Ballerina project and configure it with the obtained credentials.
-
-    ```ballerina
-    import ballerinax/hubspot.crm.extensions.videoconferencing as hubspot;
-
-    configurable string hapikey = ?;
-    configurable int appId = ?;
-
-    final int:Signed32 appIdSigned32 = <int:Signed32>appId;
-
-    final hubspot:ApiKeysConfig apiKeysConfig = {
-        hapikey: hapikey
-    };
-
-    final hubspot:Client baseClient = check new (apiKeysConfig);
     ```
 
 ## Running an example
