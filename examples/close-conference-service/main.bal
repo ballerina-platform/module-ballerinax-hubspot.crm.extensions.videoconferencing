@@ -27,7 +27,7 @@ final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final hsvideoconferencing:ApiKeysConfig apiKeysConfig = {
     hapikey: hapikey
 };
-final hsvideoconferencing:Client hsVideoConferencing = check new (apiKeysConfig);
+final hsvideoconferencing:Client hubspot = check new (apiKeysConfig);
 
 public function main() returns error? {
     // Scenario 1: The external video conferencing app no longer supports the update meeting endpoint.
@@ -39,11 +39,11 @@ public function main() returns error? {
         updateMeetingUrl: "https://my-conference.io/join-meeting",
         deleteMeetingUrl: "https://my-conference.io/record-meeting"
     };
-    any _ = check hsVideoConferencing->/[appIdSigned32].put(settings);
+    any _ = check hubspot->/[appIdSigned32].put(settings);
 
     // Step 2: Get the current settings of the external video conferencing app from HubSpot App.
-    runtime:sleep(60); // TODO: Handle differently. Wait for the server to be updated with the settings
-    hsvideoconferencing:ExternalSettings|error currentSettings = hsVideoConferencing->/[appIdSigned32]();
+    runtime:sleep(60);
+    hsvideoconferencing:ExternalSettings|error currentSettings = hubspot->/[appIdSigned32]();
     if currentSettings !is hsvideoconferencing:ExternalSettings {
         panic error("Error getting settings");
     }
@@ -55,7 +55,7 @@ public function main() returns error? {
     };
 
     // Step 4: Verify whether the updateMeetingUrl is removed from HubSpot App.
-    hsvideoconferencing:ExternalSettings|error updatedSettingsResponse = hsVideoConferencing->/[appIdSigned32].put(updatedSettings);
+    hsvideoconferencing:ExternalSettings|error updatedSettingsResponse = hubspot->/[appIdSigned32].put(updatedSettings);
     if updatedSettingsResponse is hsvideoconferencing:ExternalSettings &&
         updatedSettingsResponse.createMeetingUrl == currentSettings.createMeetingUrl &&
         updatedSettingsResponse?.deleteMeetingUrl == currentSettings?.deleteMeetingUrl &&
@@ -70,7 +70,7 @@ public function main() returns error? {
     // as well. Hence, all the settings of the external video conferencing app should be deleted from HubSpot App.
 
     // Step 1: Delete all the settings of the external video conferencing app from HubSpot App.
-    http:Response deleteResponse = check hsVideoConferencing->/[appIdSigned32].delete();
+    http:Response deleteResponse = check hubspot->/[appIdSigned32].delete();
 
     // Step 2: Verify whether all the settings are deleted from HubSpot App.
     if deleteResponse.statusCode == 204 {

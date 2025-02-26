@@ -26,7 +26,7 @@ final int:Signed32 appIdSigned32 = <int:Signed32>appId;
 final hsvideoconferencing:ApiKeysConfig apiKeysConfig = {
     hapikey: hapikey
 };
-final hsvideoconferencing:Client hsVideoConferencing = check new (apiKeysConfig);
+final hsvideoconferencing:Client hubspot = check new (apiKeysConfig);
 
 public function main() returns error? {
     // Scenario 1: A new external video conferencing app is created. Hence the URL details of this new 
@@ -38,7 +38,7 @@ public function main() returns error? {
         updateMeetingUrl: "https://my-conference.io/join-meeting",
         deleteMeetingUrl: "https://my-conference.io/record-meeting"
     };
-    hsvideoconferencing:ExternalSettings|error addedSettings = hsVideoConferencing->/[appIdSigned32].put(settings);
+    hsvideoconferencing:ExternalSettings|error addedSettings = hubspot->/[appIdSigned32].put(settings);
 
     // Step 2: Verify whether the URL details of the new external video conferencing app are added to HubSpot App.
     if addedSettings is hsvideoconferencing:ExternalSettings &&
@@ -61,7 +61,7 @@ public function main() returns error? {
     };
 
     // Step 2: Verify whether the URL details of the external video conferencing app are updated in HubSpot App.
-    hsvideoconferencing:ExternalSettings|error updatedSettings = hsVideoConferencing->/[appIdSigned32].put(newSettings);
+    hsvideoconferencing:ExternalSettings|error updatedSettings = hubspot->/[appIdSigned32].put(newSettings);
     if updatedSettings is hsvideoconferencing:ExternalSettings &&
         updatedSettings.createMeetingUrl == "https://my-conference.io/meetings/new" &&
         updatedSettings?.updateMeetingUrl == "https://my-conference.io/meetings" &&
@@ -77,7 +77,7 @@ public function main() returns error? {
 
     // Step 1: Get the current settings of the external video conferencing app from HubSpot App.
     runtime:sleep(60); // TODO: Handle differently. Wait for the server to be updated with the settings
-    hsvideoconferencing:ExternalSettings|error currentSettings = hsVideoConferencing->/[appIdSigned32]();
+    hsvideoconferencing:ExternalSettings|error currentSettings = hubspot->/[appIdSigned32]();
     if currentSettings !is hsvideoconferencing:ExternalSettings {
         panic error("Error getting settings");
     }
@@ -91,7 +91,7 @@ public function main() returns error? {
     };
 
     // Step 3: Verify whether the user verification URL of the external video conferencing app is updated in HubSpot App.
-    hsvideoconferencing:ExternalSettings|error changedSettingsResponse = hsVideoConferencing->/[appIdSigned32].put(changedSettings);
+    hsvideoconferencing:ExternalSettings|error changedSettingsResponse = hubspot->/[appIdSigned32].put(changedSettings);
     if changedSettingsResponse is hsvideoconferencing:ExternalSettings &&
         changedSettingsResponse.createMeetingUrl == currentSettings.createMeetingUrl &&
         changedSettingsResponse?.updateMeetingUrl == currentSettings?.updateMeetingUrl &&
