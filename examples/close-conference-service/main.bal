@@ -19,13 +19,14 @@ import ballerina/io;
 import ballerina/lang.runtime;
 import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencing;
 
-configurable string hapikey = ?;
-configurable int appId = ?;
+configurable string hapikey = "test-key";
+configurable int appId = 12345;
+configurable decimal delay = 60.0;
 
-final int:Signed32 appIdSigned32 = <int:Signed32>appId;
+final int:Signed32 appIdSigned32 = check appId.ensureType();
 
 final hsvideoconferencing:ApiKeysConfig apiKeysConfig = {
-    hapikey: hapikey
+    hapikey
 };
 final hsvideoconferencing:Client hubspot = check new (apiKeysConfig);
 
@@ -42,11 +43,10 @@ public function main() returns error? {
     any _ = check hubspot->/[appIdSigned32].put(settings);
 
     // Step 2: Get the current settings of the external video conferencing app from HubSpot App.
-    runtime:sleep(60);
-    hsvideoconferencing:ExternalSettings|error currentSettings = hubspot->/[appIdSigned32]();
-    if currentSettings !is hsvideoconferencing:ExternalSettings {
-        panic error("Error getting settings");
-    }
+    // Note: It takes some time for the settings to be updated in HubSpot CRM. Usually 60 seconds is enough.
+    // However, you can increase or decrease the delay as per your need through the Config.toml.
+    runtime:sleep(delay);
+    hsvideoconferencing:ExternalSettings currentSettings = check hubspot->/[appIdSigned32]();
 
     // Step 3: Remove the updateMeetingUrl from the settings.
     hsvideoconferencing:ExternalSettings updatedSettings = {
@@ -55,9 +55,8 @@ public function main() returns error? {
     };
 
     // Step 4: Verify whether the updateMeetingUrl is removed from HubSpot App.
-    hsvideoconferencing:ExternalSettings|error updatedSettingsResponse = hubspot->/[appIdSigned32].put(updatedSettings);
-    if updatedSettingsResponse is hsvideoconferencing:ExternalSettings &&
-        updatedSettingsResponse.createMeetingUrl == currentSettings.createMeetingUrl &&
+    hsvideoconferencing:ExternalSettings updatedSettingsResponse = check hubspot->/[appIdSigned32].put(updatedSettings);
+    if updatedSettingsResponse.createMeetingUrl == currentSettings.createMeetingUrl &&
         updatedSettingsResponse?.deleteMeetingUrl == currentSettings?.deleteMeetingUrl &&
         updatedSettingsResponse?.updateMeetingUrl is () {
 
