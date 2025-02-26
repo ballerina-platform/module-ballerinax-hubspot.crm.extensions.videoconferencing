@@ -15,8 +15,8 @@
 // under the License.
 
 import ballerina/http;
-import ballerina/test;
 import ballerina/os;
+import ballerina/test;
 
 configurable string hapikey = "my-key-123";
 configurable int appId = 12345;
