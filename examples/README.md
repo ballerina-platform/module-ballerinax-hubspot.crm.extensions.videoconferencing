@@ -2,8 +2,8 @@
 
 The `ballerinax/hubspot.crm.extensions.videoconferencing` connector provides practical examples illustrating usage in various scenarios.
 
-1. [Operate Conference Service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
-2. [Close Conference Service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/)
+1. [Operate conference service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
+2. [Close conference service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/)
 
 ## Prerequisites
 
