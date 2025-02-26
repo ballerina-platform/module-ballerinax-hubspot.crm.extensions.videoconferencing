@@ -4,7 +4,7 @@ This example demonstrates how to use the `HubSpot CRM Video conference connector
 
 ## Prerequisites
 
-1. Ballerina: Download and install Ballerina from [here](https://ballerina.io/downloads/).
+1. Ballerina Swan Lake Update 11 (2201.11.0).
 
 2. HubSpot developer account: Create a HubSpot developer account and create an app to obtain the necessary credentials. Refer to the [Setup Guide](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/ballerina/README.md) for instructions.
 
