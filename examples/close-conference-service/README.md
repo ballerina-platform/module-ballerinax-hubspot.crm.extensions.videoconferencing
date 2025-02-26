@@ -1,6 +1,6 @@
 # Remove saved settings for a video conferencing service
 
-This example demonstrates how to use the `HubSpot CRM Video conference connector` to remove saved settings related to an external video conferencing service. This covers the removal of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot web site by users. This allows to shut down the external video conferencing application safely without getting into any errors on HubSpot end or HubSpot making unnecessary requests to non-existing URLs (which were previously held by the external video conferencing application).
+This example demonstrates how to use the `HubSpot CRM Video conference connector` to remove saved settings related to an external video conferencing service. This covers the removal of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot website by users. This allows to shut down the external video conferencing application safely without getting into any errors on HubSpot end or HubSpot making unnecessary requests to non-existing URLs (which were previously held by the external video conferencing application).
 
 ## Prerequisites
 

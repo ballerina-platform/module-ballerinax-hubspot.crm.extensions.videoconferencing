@@ -1,6 +1,6 @@
 # [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
 
-This example demonstrates how to use the `HubSpot CRM Video conference connector` to create and manage settings related to an external video conferencing service. This covers the create and update of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot web site by users. This allows the external video conferencing application to adjust the scheduled video conferences automatically when the meeting details (scheduled time, date etc.) change in the HubSpot website.  
+This example demonstrates how to use the `HubSpot CRM Video conference connector` to create and manage settings related to an external video conferencing service. This covers the create and update of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot website by users. This allows the external video conferencing application to adjust the scheduled video conferences automatically when the meeting details (scheduled time, date etc.) change in the HubSpot website.  
 
 ## Prerequisites
 
