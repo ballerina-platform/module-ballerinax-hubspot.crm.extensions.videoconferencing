@@ -22,7 +22,7 @@ If you don't have a HubSpot developer account, you can sign up to a free account
 
 If you have an account already, go to the [HubSpot developer portal](https://app.hubspot.com/)
 
-### Step 2 (Optional): Create a developer test account under your account
+### Step 2 (Optional): Create a developer test account
 
 Within app developer accounts, you can create [developer test accounts](https://developers.hubspot.com/docs/getting-started/account-types#developer-test-accounts) to test apps and integrations without affecting any real HubSpot data.
 
@@ -37,7 +37,7 @@ Within app developer accounts, you can create [developer test accounts](https://
 3. In the dialogue box, give a name to your test account and click `Create`.
    ![Name the developer test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/name-dev-account.png)
 
-### Step 3: Create a HubSpot app under your account
+### Step 3: Create a HubSpot app
 
 1. In your developer account, navigate to the `Apps` section. Click on `Create app`
    ![Create app](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/create-app.png)
@@ -86,7 +86,7 @@ To use the `HubSpot CRM Video conference connector` in your Ballerina applicatio
 Import the `hubspot.crm.extensions.videoconferencing` module.
 
 ```ballerina
-import ballerinax/hubspot.crm.extensions.videoconferencing as hubspot;
+import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencing;
 ```
 
 ### Step 2: Instantiate a new connector
@@ -97,24 +97,24 @@ import ballerinax/hubspot.crm.extensions.videoconferencing as hubspot;
    configurable string hapikey = ?;
    configurable int appId = ?;
 
-   final int:Signed32 appIdSigned32 = <int:Signed32>appId;
+   final int:Signed32 appIdSigned32 = check appId.ensureType();
    ```
 
-2. Instantiate a `hubspot:ApiKeysConfig` with the defined `hapikey` and initialize the connector with it.
+2. Instantiate a `hsvideoconferencing:ApiKeysConfig` with the defined `hapikey` and initialize the connector with it.
 
    ```ballerina
-   final hubspot:ApiKeysConfig apiKeysConfig = {
-      hapikey: hapikey
+   final hsvideoconferencing:ApiKeysConfig apiKeysConfig = {
+      hapikey
    };
 
-   final hubspot:Client hsVideoConferencing = check new (apiKeysConfig);
+   final hsvideoconferencing:Client hubspot = check new (apiKeysConfig);
    ```
 
 3. Create a `Config.toml` file and, configure the obtained credentials in the above steps as follows:
 
    ```toml
-    hapikey = <Hubspot developer API key as a string>
-    appId = <App ID as an int>
+    hapikey = <Hubspot developer API key>  # string
+    appId = <App ID>  # int
    ```
 
 ### Step 3: Invoke the connector operation
@@ -125,7 +125,7 @@ Utilize the available connector operations. A sample use case is shown below.
 
 ```ballerina
 public function main() returns error? {
-   hubspot:ExternalSettings settings = {
+   hsvideoconferencing:ExternalSettings settings = {
       createMeetingUrl: "https://example.com/create-meeting",
       updateMeetingUrl: "https://example.com/update-meeting",
       deleteMeetingUrl: "https://example.com/delete-meeting",
@@ -133,7 +133,7 @@ public function main() returns error? {
       fetchAccountsUri: "https://example.com/fetch-accounts"
    };
 
-   hubspot:ExternalSettings response = check hsVideoConferencing->/[appIdSigned32].put(settings);
+   hsvideoconferencing:ExternalSettings response = check hubspot->/[appIdSigned32].put(settings);
 }
 ```
 
@@ -147,8 +147,8 @@ bal run
 
 The `HubSpot CRM Video conference connector` provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/), covering the following use cases:
 
-1. [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
-2. [Remove saved settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/)
+1. [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/) - This example demonstrates how to save settings in HubSpot CRM for a video conferencing service using the connector.
+2. [Remove saved settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/) - This example demonstrates how to remove the saved settings in HubSpot CRM for an external video conferencing application using the connector.
 
 ## Build from the source
 
