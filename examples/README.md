@@ -5,7 +5,6 @@ The `ballerinax/hubspot.crm.extensions.videoconferencing` connector provides pra
 1. [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/) - This example demonstrates how to save settings in HubSpot CRM for a video conferencing service using the connector.
 2. [Remove saved settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/) - This example demonstrates how to remove the saved settings in HubSpot CRM for an external video conferencing application using the connector.
 
-
 ## Prerequisites
 
 1. Ballerina Swan Lake Update 11 (2201.11.0).
