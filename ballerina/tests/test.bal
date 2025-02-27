@@ -56,7 +56,9 @@ function testDeleteSettings() returns error? {
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
-    if !isLiveServer {
+    // Note: It takes some time for the settings to be updated in HubSpot CRM. Usually 60 seconds is enough.
+    // However, you can increase or decrease the delay as per your need through the Config.toml.
+    if isLiveServer {
         runtime:sleep(delay);
     }
     ExternalSettings|http:ClientRequestError|error settings = hubspot->/[appIdSigned32]();
@@ -92,7 +94,9 @@ function testPutIncorrectAppId() returns error? {
     dependsOn: [testPutSettings]
 }
 function testGetSettings() returns error? {
-    if !isLiveServer {
+    // Note: It takes some time for the settings to be updated in HubSpot CRM. Usually 60 seconds is enough.
+    // However, you can increase or decrease the delay as per your need through the Config.toml.
+    if isLiveServer {
         runtime:sleep(delay);
     }
     ExternalSettings|http:Response settings = check hubspot->/[appIdSigned32]();
