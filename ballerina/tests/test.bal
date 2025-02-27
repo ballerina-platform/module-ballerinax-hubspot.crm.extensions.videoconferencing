@@ -15,17 +15,19 @@
 // under the License.
 
 import ballerina/http;
-import ballerina/test;
+import ballerina/lang.runtime;
 import ballerina/os;
+import ballerina/test;
 
 configurable string hapikey = "my-key-123";
 configurable int appId = 12345;
+configurable decimal delay = 60.0;
 
 configurable string liveServerUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings";
 configurable string localServerUrl = "http://localhost:9090";
 configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
 
-final int:Signed32 appIdSigned32 = <int:Signed32>appId;
+final int:Signed32 appIdSigned32 = check appId.ensureType();
 final int:Signed32 incorrectAppId = 1234;
 final string serviceUrl = isLiveServer ? liveServerUrl : localServerUrl;
 final Client hubspot = check initClient();
@@ -33,12 +35,12 @@ final Client hubspot = check initClient();
 isolated function initClient() returns Client|error {
     if isLiveServer {
         final ApiKeysConfig apiKeysConfig = {
-            hapikey: hapikey
+            hapikey
         };
         return check new (apiKeysConfig, {}, serviceUrl);
     }
     return check new ({
-        hapikey: hapikey
+        hapikey
     }, {}, serviceUrl);
 }
 
@@ -54,6 +56,9 @@ function testDeleteSettings() returns error? {
     dependsOn: [testDeleteSettings]
 }
 function testGetEmptySettings() returns error? {
+    if !isLiveServer {
+        runtime:sleep(delay);
+    }
     ExternalSettings|http:ClientRequestError|error settings = hubspot->/[appIdSigned32]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
@@ -87,6 +92,9 @@ function testPutIncorrectAppId() returns error? {
     dependsOn: [testPutSettings]
 }
 function testGetSettings() returns error? {
+    if !isLiveServer {
+        runtime:sleep(delay);
+    }
     ExternalSettings|http:Response settings = check hubspot->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
     if settings is ExternalSettings {
@@ -140,4 +148,3 @@ function testDeleteSettingsAgain() returns error? {
     http:Response response = check hubspot->/[appIdSigned32].delete();
     test:assertEquals(response.statusCode, 204, "Error deleting settings");
 }
-

@@ -1,9 +1,6 @@
-# Examples
+# [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/)
 
-The `ballerinax/hubspot.crm.extensions.videoconferencing` connector provides practical examples illustrating usage in various scenarios.
-
-1. [Save settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/operate-conference-service/) - This example demonstrates how to save settings in HubSpot CRM for a video conferencing service using the connector.
-2. [Remove saved settings for a video conferencing service](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/tree/main/examples/close-conference-service/) - This example demonstrates how to remove the saved settings in HubSpot CRM for an external video conferencing application using the connector.
+This example demonstrates how to use the `HubSpot CRM Video conference connector` to create and manage settings related to an external video conferencing service. This covers the create and update of settings for notifying the external video conferencing service about meetings scheduled in the HubSpot CRM by users. This allows the external video conferencing application to adjust the scheduled video conferences automatically when the meeting details (scheduled time, date etc.) change in the HubSpot CRM.  
 
 ## Prerequisites
 
@@ -22,17 +19,17 @@ The `ballerinax/hubspot.crm.extensions.videoconferencing` connector provides pra
 
 Execute the following commands to build an example from the source:
 
-* To build an example:
+- To build an example:
 
-    ```bash
-    bal build
-    ```
+  ```bash
+  bal build
+  ```
 
-* To run an example:
+- To run an example:
 
-    ```bash
-    bal run
-    ```
+  ```bash
+  bal run
+  ```
 
 ## Building the examples with the local module
 
@@ -40,14 +37,14 @@ Execute the following commands to build an example from the source:
 
 Execute the following commands to build all the examples against the changes you have made to the module locally:
 
-* To build all the examples:
+- To build all the examples:
 
-    ```bash
-    ./build.sh build
-    ```
+  ```bash
+  ./build.sh build
+  ```
+  
+- To run all the examples:
 
-* To run all the examples:
-
-    ```bash
-    ./build.sh run
-    ```
+  ```bash
+  ./build.sh run
+  ```
