@@ -21,51 +21,51 @@ Within app developer accounts, you can create [developer test accounts](https://
 > **Note: These accounts are only for development and testing purposes. In production you should not use developer test accounts.**
 
 1. Go to `Test accounts` section from the left sidebar.
-   ![Test accounts section](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/test-accounts-section.png)
+   ![Test accounts section](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/test-accounts-section.png)
 
 2. Click `Create developer test account`.
-   ![Create developer test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/create-dev-account.png)
+   ![Create developer test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/create-dev-account.png)
 
 3. In the dialogue box, give a name to your test account and click `Create`.
-   ![Name the developer test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/name-dev-account.png)
+   ![Name the developer test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/name-dev-account.png)
 
 ### Step 3: Create a HubSpot app
 
 1. In your developer account, navigate to the `Apps` section. Click on `Create app`
-   ![Create app](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/create-app.png)
+   ![Create app](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/create-app.png)
 
 2. Provide the required app name and optionally a description.
-   ![Name the app](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/name-app.png)
+   ![Name the app](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/name-app.png)
 
 ### Step 4: Set redirect URI
 
 1. Move to the `Auth` tab.
-   ![Move to auth tab](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/auth-tab.png)
+   ![Move to auth tab](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/auth-tab.png)
 
 2. Add your `Redirect URL` in the relevant section. You can also use localhost addresses for local development purposes. Click `Create app`.
-   ![Add redirect URL](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/set-redirect-url.png)
+   ![Add redirect URL](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/set-redirect-url.png)
 
 ### Step 5: Get your app ID
 
 1. Navigate to the `Apps` section, again.
-  ![Go to Apps](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/go-to-apps.png)
+  ![Go to Apps](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/go-to-apps.png)
 
 2. Obtain the `App ID`.
-  ![Get app ID](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/get-app-id.png)
+  ![Get app ID](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/get-app-id.png)
 
 ### Step 6: Get your developer API key
 
 1. Click on `Keys` section on the left sidebar and then on `Developer API Key`.
-  ![Go to developer API key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/dev-key-screen.png)
+  ![Go to developer API key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/dev-key-screen.png)
 
 2. Click on `Create Key`.
-  ![Create the key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/create-dev-key.png)
+  ![Create the key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/create-dev-key.png)
 
 3. Click on `Show`.
-  ![Show the key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/show-dev-key.png)
+  ![Show the key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/show-dev-key.png)
 
 4. Click on `Copy` to obtain the developer API key.
-  ![Copy the key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/main/docs/resources/copy-dev-key.png)
+  ![Copy the key](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/refs/heads/main/docs/resources/copy-dev-key.png)
 
 >**Store the App ID (obtained in Step 4) and Developer API Key (Obtained in Step 5) securely for use in your application.**
 
