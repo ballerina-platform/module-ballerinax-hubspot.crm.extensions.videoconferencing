@@ -11,8 +11,8 @@ This example demonstrates how to use the `HubSpot CRM Video conference connector
 3. `Config.toml`: Add the `Config.toml` in the example's root directory and add the obtained credentials from HubSpot. Here's an example of how your `Config.toml` file should look:
 
     ```toml
-    hapikey = <HubSpot developer API key as a string>
-    appId = <App ID as an int>
+    hapikey = <HubSpot developer API key>  # string
+    appId = <App ID>  # int
     ```
 
 ## Running an example
