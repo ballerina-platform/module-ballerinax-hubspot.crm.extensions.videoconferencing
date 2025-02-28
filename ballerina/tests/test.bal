@@ -28,32 +28,40 @@ configurable string localServerUrl = "http://localhost:9090";
 configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
 
 final int:Signed32 appIdSigned32 = check appId.ensureType();
-final int:Signed32 incorrectAppId = 1234;
-final string serviceUrl = isLiveServer ? liveServerUrl : localServerUrl;
+const int:Signed32 incorrectAppId = 1234;
 final Client hubspot = check initClient();
+
+const ExternalSettings partialSettings = {
+    createMeetingUrl: "https://example.com/create-meeting"
+};
+const ExternalSettings completeSettings = {
+    createMeetingUrl: "https://example.com/create-meeting",
+    updateMeetingUrl: "https://example.com/update-meeting",
+    deleteMeetingUrl: "https://example.com/delete-meeting",
+    userVerifyUrl: "https://example.com/verify-user",
+    fetchAccountsUri: "https://example.com/fetch-accounts"
+};
 
 isolated function initClient() returns Client|error {
     if isLiveServer {
         final ApiKeysConfig apiKeysConfig = {
             hapikey
         };
-        return check new (apiKeysConfig, {}, serviceUrl);
+        return check new (apiKeysConfig, {}, liveServerUrl);
     }
     return check new ({
         hapikey
-    }, {}, serviceUrl);
+    }, {}, localServerUrl);
 }
 
-// Test: Delete existing settings if any (Positive)
-@test:Config {}
-function testDeleteSettings() returns error? {
-    http:Response response = check hubspot->/[appIdSigned32].delete();
-    test:assertEquals(response.statusCode, 204, "Error deleting settings");
+@test:BeforeSuite
+function beforeSuite() returns error? {
+    // Clear all previously saved settings (if any) in HubSpot
+    http:Response _ = check hubspot->/[appIdSigned32].delete();
 }
 
-// Test: Get settings when no settings are available (Negative)
 @test:Config {
-    dependsOn: [testDeleteSettings]
+    groups: ["negative_tests"]
 }
 function testGetEmptySettings() returns error? {
     // Note: It takes some time for the settings to be updated in HubSpot CRM. Usually 60 seconds is enough.
@@ -61,37 +69,31 @@ function testGetEmptySettings() returns error? {
     if isLiveServer {
         runtime:sleep(delay);
     }
-    ExternalSettings|http:ClientRequestError|error settings = hubspot->/[appIdSigned32]();
+    ExternalSettings|error settings = hubspot->/[appIdSigned32]();
     test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
 }
 
-// Test: Put partial settings (Positive)
 @test:Config {
-    dependsOn: [testGetEmptySettings]
+    dependsOn: [testGetEmptySettings],
+    groups: ["positive_tests"]
 }
-function testPutSettings() returns error? {
-    ExternalSettings payload = {
-        createMeetingUrl: "https://example.com/create-meeting"
-    };
-    ExternalSettings settings = check hubspot->/[appIdSigned32].put(payload);
-    test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error putting settings");
+function testPartialPutSettings() returns error? {
+    ExternalSettings settings = check hubspot->/[appIdSigned32].put(partialSettings);
+    test:assertEquals(settings.createMeetingUrl, partialSettings.createMeetingUrl, "Error putting settings");
 }
 
-// Test: Put settings with incorrect appId (Negative)
 @test:Config {
-    dependsOn: [testPutSettings]
+    dependsOn: [testPartialPutSettings],
+    groups: ["negative_tests"]
 }
 function testPutIncorrectAppId() returns error? {
-    ExternalSettings payload = {
-        createMeetingUrl: "https://example.com/create-meeting"
-    };
-    ExternalSettings|http:ClientRequestError|error settings = hubspot->/[incorrectAppId].put(payload);
+    ExternalSettings|error settings = hubspot->/[incorrectAppId].put(partialSettings);
     test:assertTrue(settings is http:ClientRequestError, "Error putting settings with incorrect appId");
 }
 
-// Test: Get settings (Positive)
 @test:Config {
-    dependsOn: [testPutSettings]
+    dependsOn: [testPartialPutSettings],
+    groups: ["positive_tests"]
 }
 function testGetSettings() returns error? {
     // Note: It takes some time for the settings to be updated in HubSpot CRM. Usually 60 seconds is enough.
@@ -102,53 +104,48 @@ function testGetSettings() returns error? {
     ExternalSettings|http:Response settings = check hubspot->/[appIdSigned32]();
     test:assertTrue(settings is ExternalSettings, "Type mismatch");
     if settings is ExternalSettings {
-        test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error getting settings");
+        test:assertEquals(settings.createMeetingUrl, partialSettings.createMeetingUrl, "Error getting settings");
     }
 }
 
-// Test: Delete settings (Positive)
 @test:Config {
-    dependsOn: [testPutSettings]
+    dependsOn: [testPartialPutSettings],
+    groups: ["negative_tests"]
 }
 function testGetIncorrectAppId() returns error? {
-    ExternalSettings|http:ClientRequestError|error settings = hubspot->/[incorrectAppId]();
-    test:assertTrue(settings is http:ClientRequestError, "Error getting settings");
+    ExternalSettings|error settings = hubspot->/[incorrectAppId]();
+    test:assertTrue(settings is http:ClientRequestError, "Error getting settings with incorrect appId");
 }
 
-// Test: Delete settings with incorrect appId (Negative)
 @test:Config {
-    dependsOn: [testGetSettings]
+    dependsOn: [testGetSettings],
+    groups: ["negative_tests"]
 }
 function testDeleteIncorrectAppId() returns error? {
     http:Response response = check hubspot->/[incorrectAppId].delete();
     test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
 }
 
-// Test: Put complete settings (Positive)
 @test:Config {
-    dependsOn: [testPutSettings]
+    dependsOn: [testPartialPutSettings],
+    groups: ["positive_tests"]
 }
-function testPutCompeteSettings() returns error? {
-    ExternalSettings payload = {
-        createMeetingUrl: "https://example.com/create-meeting",
-        updateMeetingUrl: "https://example.com/update-meeting",
-        deleteMeetingUrl: "https://example.com/delete-meeting",
-        userVerifyUrl: "https://example.com/verify-user",
-        fetchAccountsUri: "https://example.com/fetch-accounts"
-    };
-    ExternalSettings settings = check hubspot->/[appIdSigned32].put(payload);
-    test:assertEquals(settings.createMeetingUrl, "https://example.com/create-meeting", "Error putting complete settings");
-    test:assertEquals(settings?.updateMeetingUrl, "https://example.com/update-meeting", "Error putting complete settings");
-    test:assertEquals(settings?.deleteMeetingUrl, "https://example.com/delete-meeting", "Error putting complete settings");
-    test:assertEquals(settings?.userVerifyUrl, "https://example.com/verify-user", "Error putting complete settings");
-    test:assertEquals(settings?.fetchAccountsUri, "https://example.com/fetch-accounts", "Error putting complete settings");
+function testPutCompleteSettings() returns error? {
+    ExternalSettings settings = check hubspot->/[appIdSigned32].put(completeSettings);
+    test:assertEquals(settings, completeSettings, "Error putting complete settings");
 }
 
-// Test: Delete complete settings (Positive)
 @test:Config {
-    dependsOn: [testGetSettings]
+    dependsOn: [testGetSettings],
+    groups: ["positive_tests"]
 }
-function testDeleteSettingsAgain() returns error? {
+function testDeleteCompleteSettings() returns error? {
     http:Response response = check hubspot->/[appIdSigned32].delete();
     test:assertEquals(response.statusCode, 204, "Error deleting settings");
+}
+
+@test:AfterSuite
+function afterSuite() returns error? {
+    // Clear all saved test settings in HubSpot
+    http:Response _ = check hubspot->/[appIdSigned32].delete();
 }
