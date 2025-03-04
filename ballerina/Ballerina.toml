@@ -5,7 +5,7 @@ name = "hubspot.crm.extensions.videoconferencing"
 version = "1.0.0"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = ["hubspot", "CRM", "Video Conferencing", "API Integration", "Customer Data", "Meeting Management", "Automation"]
+keywords = ["hubspot", "crm", "video conferencing", "API integration", "customer data", "meeting management", "automation"]
 repository = "https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing"
 
 [build-options]
