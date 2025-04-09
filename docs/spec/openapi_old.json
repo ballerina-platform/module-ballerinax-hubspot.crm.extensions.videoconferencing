@@ -34,7 +34,7 @@
         "parameters" : [ {
           "name" : "appId",
           "in" : "path",
-          "description" : "The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal",
+          "description" : "The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal.",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -77,7 +77,7 @@
         "parameters" : [ {
           "name" : "appId",
           "in" : "path",
-          "description" : "The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal",
+          "description" : "The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal.",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -130,7 +130,7 @@
         "parameters" : [ {
           "name" : "appId",
           "in" : "path",
-          "description" : "The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal",
+          "description" : "The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal.",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -177,7 +177,7 @@
           },
           "in" : {
             "type" : "string",
-            "description" : "The name of the field or parameter in which the error was found"
+            "description" : "The name of the field or parameter in which the error was found."
           },
           "context" : {
             "type" : "object",
@@ -204,34 +204,34 @@
         "properties" : {
           "userVerifyUrl" : {
             "type" : "string",
-            "description" : "The URL that HubSpot will use to verify that a user exists in the video conference application",
-            "nullable" : true,
-            "example" : "https://example.com/user-verify"
+            "description" : "The URL that HubSpot will use to verify that a user exists in the video conference application.",
+            "example" : "https://example.com/user-verify",
+            "nullable": true
           },
           "fetchAccountsUri" : {
             "type" : "string",
-            "nullable" : true,
-            "example" : "https://example.xyz/1"
+            "example": "https://example.xyz/1",
+            "nullable": true
           },
           "createMeetingUrl" : {
             "type" : "string",
-            "description" : "The URL that HubSpot will send requests to create a new video conference",
+            "description" : "The URL that HubSpot will send requests to create a new video conference.",
             "example" : "https://example.com/create-meeting"
           },
           "updateMeetingUrl" : {
             "type" : "string",
-            "description" : "The URL that HubSpot will send updates to existing meetings. Typically called when the user changes the topic or times of a meeting",
-            "nullable" : true,
-            "example" : "https://example.com/update-meeting"
+            "description" : "The URL that HubSpot will send updates to existing meetings. Typically called when the user changes the topic or times of a meeting.",
+            "example" : "https://example.com/update-meeting",
+            "nullable": true
           },
           "deleteMeetingUrl" : {
             "type" : "string",
-            "description" : "The URL that HubSpot will send notifications of meetings that have been deleted in HubSpot",
-            "nullable" : true,
-            "example" : "https://example.com/delete-meeting"
+            "description" : "The URL that HubSpot will send notifications of meetings that have been deleted in HubSpot.",
+            "example" : "https://example.com/delete-meeting",
+            "nullable": true
           }
         },
-        "description" : "The URLs of the various actions provided by the video conferencing application. All URLs must use the `https` protocol",
+        "description" : "The URLs of the various actions provided by the video conferencing application. All URLs must use the `https` protocol.",
         "example" : {
           "createMeetingUrl" : "https://example.com/create-meeting",
           "updateMeetingUrl" : "https://example.com/update-meeting",
@@ -320,9 +320,9 @@
     "securitySchemes" : {
       "developer_hapikey" : {
         "type" : "apiKey",
-        "description" : "HubSpot developer API key",
         "name" : "hapikey",
-        "in" : "query"
+        "in" : "query",
+        "description" : "HubSpot developer API key"
       }
     }
   },
