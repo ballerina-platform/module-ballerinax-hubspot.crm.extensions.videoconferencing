@@ -4,5 +4,11 @@ name = "close_conference_service"
 version = "0.1.0"
 distribution = "2201.11.0"
 
+[[dependency]]
+org = "ballerinax"
+name = "hubspot.crm.extensions.videoconferencing"
+version = "2.0.0"
+repository="local"
+
 [build-options]
 observabilityIncluded = true
