@@ -37,19 +37,7 @@ service on new http:Listener(9090) {
         return meetingSettings;
     }
 
-    resource function delete [int:Signed32 appId]() returns http:Response|error {
-        if appId != appIdSigned32 {
-            http:Response response = new ();
-            response.statusCode = 404;
-            response.server = "ballerina";
-            return response;
-        }
-        meetingSettings = {
-            createMeetingUrl: ""
-        };
-        http:Response response = new ();
-        response.statusCode = 204;
-        response.server = "ballerina";
-        return response;
+    resource function delete [int:Signed32 appId]() returns error? {
+        return appId != appIdSigned32 ? error("Invalid app id") : ();
     }
 }

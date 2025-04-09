@@ -14,7 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/http;
 import ballerina/io;
 import ballerina/lang.runtime;
 import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencing;
@@ -69,10 +68,10 @@ public function main() returns error? {
     // as well. Hence, all the settings of the external video conferencing app should be deleted from HubSpot App.
 
     // Step 1: Delete all the settings of the external video conferencing app from HubSpot App.
-    http:Response deleteResponse = check hubspot->/[appIdSigned32].delete();
+    error? deleteResponse = check hubspot->/[appIdSigned32].delete();
 
     // Step 2: Verify whether all the settings are deleted from HubSpot App.
-    if deleteResponse.statusCode == 204 {
+    if deleteResponse == () {
         io:println("All settings deleted successfully for scenario 2");
     } else {
         io:println("Error deleting all settings for scenario 2");
