@@ -23,58 +23,21 @@ import ballerina/http;
 public isolated client class Client {
     final http:Client clientEp;
     final readonly & ApiKeysConfig apiKeyConfig;
-
     # Gets invoked to initialize the `connector`.
     #
     # + apiKeyConfig - API keys for authorization 
     # + config - The configurations to be used when initializing the `connector` 
     # + serviceUrl - URL of the target service 
     # + return - An error if connector initialization failed 
-    public isolated function init(ApiKeysConfig apiKeyConfig, ConnectionConfig config = {}, string serviceUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings") returns error? {
-        http:ClientConfiguration httpClientConfig = {httpVersion: config.httpVersion, timeout: config.timeout, forwarded: config.forwarded, poolConfig: config.poolConfig, compression: config.compression, circuitBreaker: config.circuitBreaker, retryConfig: config.retryConfig, validation: config.validation};
-        do {
-            if config.http1Settings is ClientHttp1Settings {
-                ClientHttp1Settings settings = check config.http1Settings.ensureType(ClientHttp1Settings);
-                httpClientConfig.http1Settings = {...settings};
-            }
-            if config.http2Settings is http:ClientHttp2Settings {
-                httpClientConfig.http2Settings = check config.http2Settings.ensureType(http:ClientHttp2Settings);
-            }
-            if config.cache is http:CacheConfig {
-                httpClientConfig.cache = check config.cache.ensureType(http:CacheConfig);
-            }
-            if config.responseLimits is http:ResponseLimitConfigs {
-                httpClientConfig.responseLimits = check config.responseLimits.ensureType(http:ResponseLimitConfigs);
-            }
-            if config.secureSocket is http:ClientSecureSocket {
-                httpClientConfig.secureSocket = check config.secureSocket.ensureType(http:ClientSecureSocket);
-            }
-            if config.proxy is http:ProxyConfig {
-                httpClientConfig.proxy = check config.proxy.ensureType(http:ProxyConfig);
-            }
-        }
-        http:Client httpEp = check new (serviceUrl, httpClientConfig);
-        self.clientEp = httpEp;
+    public isolated function init(ApiKeysConfig apiKeyConfig, ConnectionConfig config =  {}, string serviceUrl = "https://api.hubapi.com/crm/v3/extensions/videoconferencing/settings") returns error? {
+        http:ClientConfiguration httpClientConfig = {httpVersion: config.httpVersion, http1Settings: config.http1Settings, http2Settings: config.http2Settings, timeout: config.timeout, forwarded: config.forwarded, followRedirects: config.followRedirects, poolConfig: config.poolConfig, cache: config.cache, compression: config.compression, circuitBreaker: config.circuitBreaker, retryConfig: config.retryConfig, cookieConfig: config.cookieConfig, responseLimits: config.responseLimits, secureSocket: config.secureSocket, proxy: config.proxy, socketConfig: config.socketConfig, validation: config.validation, laxDataBinding: config.laxDataBinding};
+        self.clientEp = check new (serviceUrl, httpClientConfig);
         self.apiKeyConfig = apiKeyConfig.cloneReadOnly();
-        return;
-    }
-
-    # Delete settings
-    #
-    # + appId - The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal.
-    # + headers - Headers to be sent with the request 
-    # + return - No content 
-    resource isolated function delete [int:Signed32 appId](map<string|string[]> headers = {}) returns http:Response|error {
-        string resourcePath = string `/${getEncodedUri(appId)}`;
-        map<anydata> queryParam = {};
-        queryParam["hapikey"] = self.apiKeyConfig.hapikey;
-        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
-        return self.clientEp->delete(resourcePath, headers = headers);
     }
 
     # Get settings
     #
-    # + appId - The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal.
+    # + appId - The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     resource isolated function get [int:Signed32 appId](map<string|string[]> headers = {}) returns ExternalSettings|error {
@@ -87,7 +50,7 @@ public isolated client class Client {
 
     # Update settings
     #
-    # + appId - The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal.
+    # + appId - The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     resource isolated function put [int:Signed32 appId](ExternalSettings payload, map<string|string[]> headers = {}) returns ExternalSettings|error {
@@ -99,5 +62,18 @@ public isolated client class Client {
         json jsonBody = payload.toJson();
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, headers);
+    }
+
+    # Delete settings
+    #
+    # + appId - The ID of the video conference application. This is the identifier of the application created in your HubSpot developer portal
+    # + headers - Headers to be sent with the request 
+    # + return - No content 
+    resource isolated function delete [int:Signed32 appId](map<string|string[]> headers = {}) returns error? {
+        string resourcePath = string `/${getEncodedUri(appId)}`;
+        map<anydata> queryParam = {};
+        queryParam["hapikey"] = self.apiKeyConfig.hapikey;
+        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
+        return self.clientEp->delete(resourcePath, headers = headers);
     }
 }

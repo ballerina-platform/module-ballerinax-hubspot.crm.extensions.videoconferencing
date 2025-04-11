@@ -57,7 +57,7 @@ isolated function initClient() returns Client|error {
 @test:BeforeSuite
 function beforeSuite() returns error? {
     // Clear all previously saved settings (if any) in HubSpot
-    http:Response _ = check hubspot->/[appIdSigned32].delete();
+    _ = check hubspot->/[appIdSigned32].delete();
 }
 
 @test:Config {
@@ -122,8 +122,8 @@ function testGetIncorrectAppId() returns error? {
     groups: ["negative_tests"]
 }
 function testDeleteIncorrectAppId() returns error? {
-    http:Response response = check hubspot->/[incorrectAppId].delete();
-    test:assertEquals(response.statusCode, 404, "Error deleting settings with incorrect appId");
+    error? response = hubspot->/[incorrectAppId].delete();
+    test:assertTrue(response is error);
 }
 
 @test:Config {
@@ -140,12 +140,12 @@ function testPutCompleteSettings() returns error? {
     groups: ["positive_tests"]
 }
 function testDeleteCompleteSettings() returns error? {
-    http:Response response = check hubspot->/[appIdSigned32].delete();
-    test:assertEquals(response.statusCode, 204, "Error deleting settings");
+    error? response = check hubspot->/[appIdSigned32].delete();
+    test:assertEquals(response, ());
 }
 
 @test:AfterSuite
 function afterSuite() returns error? {
     // Clear all saved test settings in HubSpot
-    http:Response _ = check hubspot->/[appIdSigned32].delete();
+    _ = check hubspot->/[appIdSigned32].delete();
 }
