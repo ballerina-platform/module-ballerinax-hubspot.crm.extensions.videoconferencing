@@ -17,6 +17,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import ballerina/data.jsondata;
 import ballerina/http;
 
 # These APIs allow you to specify URLs that can be used to interact with a video conferencing application, to allow HubSpot to add video conference links to meeting requests with contacts.
@@ -59,7 +60,7 @@ public isolated client class Client {
         queryParam["hapikey"] = self.apiKeyConfig.hapikey;
         resourcePath = resourcePath + check getPathForQueryParam(queryParam);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, headers);
     }
