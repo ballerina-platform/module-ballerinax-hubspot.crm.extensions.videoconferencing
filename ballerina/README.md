@@ -2,7 +2,14 @@
 
 [HubSpot](https://developers.hubspot.com) is an AI-powered customer relationship management (CRM) platform.
 
-The `hubspot.crm.extensions.videoconferencing` offers APIs to connect and interact with the [HubSpot Video conferencing extension's API](https://developers.hubspot.com/docs/reference/api/crm/extensions/video-conferencing) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api).
+The HubSpot connector offers APIs to connect and interact with the [HubSpot Video conferencing extension's API](https://developers.hubspot.com/docs/reference/api/crm/extensions/video-conferencing) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api).
+
+### Key Features
+
+- Manage video conferencing integrations with HubSpot CRM
+- Create and update video conference meeting settings
+- Associate video conferences with CRM meetings
+- Support for external video conferencing provider integration
 
 ## Setup guide
 
