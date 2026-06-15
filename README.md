@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/actions/workflows/ci.yml)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing.svg)](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/hubspot.crm.extensions.videoconferencing.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%hubspot.crm.extensions.videoconferencing)
+[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/hubspot.crm.extensions.videoconferencing.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fhubspot.crm.extensions.videoconferencing)
 
 ## Overview
 
@@ -111,7 +111,7 @@ import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencin
 3. Create a `Config.toml` file and, configure the obtained credentials in the above steps as follows:
 
    ```toml
-    hapikey = <Hubspot developer API key>  # string
+    hapikey = <HubSpot developer API key>  # string
     appId = <App ID>  # int
    ```
 
