@@ -112,7 +112,7 @@ import ballerinax/hubspot.crm.extensions.videoconferencing as hsvideoconferencin
 3. Create a `Config.toml` file and, configure the obtained credentials in the above steps as follows:
 
    ```toml
-    hapikey = <Hubspot developer API key>  # string
+    hapikey = <HubSpot developer API key>  # string
     appId = <App ID>  # int
    ```
 
